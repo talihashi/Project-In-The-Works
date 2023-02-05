@@ -1,0 +1,22 @@
+* {
+    font-family: cursive;
+    text-align: center;
+}
+
+#instructions {
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown {
+    width: 40%;
+}
+
+.player {
+    width: 40%;
+}

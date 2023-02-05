@@ -1,11 +1,12 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-
 const app = express()
+const {SERVER_PORT} = process.env
+const {getNfts} = require('./controller')
 
 app.use(express.json())
 app.use(cors())
+app.post("/nfts", getNfts)
 
-
-
-app.listen(42069, () => console.log("The server can see you, 42,069."))
+app.listen(SERVER_PORT, () => console.log(`The server can see you, ${SERVER_PORT}.`))
