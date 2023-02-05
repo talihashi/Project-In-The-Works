@@ -35,7 +35,8 @@ const getNfts = (walletId, player) => {
                 nftOption.textContent = nft.title
                 dropdown.appendChild(nftOption)
             })
-            if(player = 1) {
+            
+            if(player === 1) {
                 firstDropdown.appendChild(dropdown)
             } else {
                 secondDropdown.appendChild(dropdown)
@@ -43,8 +44,8 @@ const getNfts = (walletId, player) => {
         })
     }
     //if double click deselect
+    //need to check if player 
     //add button onto card where selection can be removed
-    //for some reason it's pushing into 1 arr, and my dropdowns are both going into the firstList div
 
 const createPlayerCards = (player) => {
 
