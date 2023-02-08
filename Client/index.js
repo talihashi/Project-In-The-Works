@@ -10,8 +10,8 @@ const wallet2input = document.querySelector('#wallet2')
 
 const player1Card = document.getElementById('player1Card')
 const player2Card = document.getElementById('player2Card')
-const fightBtn = document.getElementById('fightBtn')
-const resetBtn = document.getElementById('resetBtn')
+const fightBtn = document.getElementById('fightbtn')
+const resetBtn = document.getElementById('resetbtn')
 const getRandomBtn = document.getElementById('getRandomBtn')
 
 let player1selection = []
