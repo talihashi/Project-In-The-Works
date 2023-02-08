@@ -9,9 +9,14 @@
 </head>
 <body>
     <section id="instructions">
-        <h3>This site can gather the NFT's from your wallet, you pick 3 to fight with. Then you can do the same with someone elses wallet. Have them pick 3 and prepare to fight! My algorithm will convert the rarity of the NFT's you pick into battle stats where they can face off against each other in a game similar to rumble royale!</h3>
-        <p>Don't have a wallet to use? Just hit get random for it to select some random NFT's from the database for you to battle!<br> Notes: by using this App you are storing versions of your NFT's in our database. This app is currently only set for the ETH blockchain.</p>
+        <h3>This site can gather the NFT's from two wallet's. Pick 3 from each and prepare to fight! My algorithm will randomly generate the NFT's you pick with battle stats where they will face off against each other in a style similar to rumble royale!</h3>
+        <p>Don't have a wallet to use? Just hit get random for it to select some random NFT's from the database for you to battle!</p>
+        <h5>Notes: by using this App you are storing versions of your NFT's in its database. This app is currently only set for the ETH blockchain.</h5>
     </section>
+
+    <div id="getRandom">
+        <button id="getRandomBtn" type="submit">Random Draw</button>
+    </div>
 
     <main>
         <section class="player" id="player1">
@@ -34,19 +39,27 @@
                 <div id="player2NftRow">
                 </div>
         </section>
-    </main>
-
+            
+        </main>
+        
+        <div id="fightDiv">
+            <button id="fightBtn" type="submit">Fight!!!</button>
+        </div>
 
     <details open>
-
+        <div id="fightDetails">
+        </div>
     </details>
 
     <summary>
-
+        <div id="winningTeam">
+        </div>
     </summary>
 
     <footer>
-
+        <div>
+            <button id="resetBtn" type="submit">Reset</button>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

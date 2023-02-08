@@ -1,5 +1,4 @@
 
-
 const baseURL = "http://localhost:4202"
 //console.log(baseURL)
 const firstDropdown = document.querySelector('#firstList')
@@ -9,20 +8,14 @@ const wallet2Btn = document.querySelector('#wallet2btn')
 const wallet1input =  document.querySelector('#wallet1')
 const wallet2input = document.querySelector('#wallet2')
 
-const player1Nft1 = document.getElementById('player1NftRow')
-const player1Nft2 = document.getElementById('player1NftRow')
-const player1Nft3 = document.getElementById('player1NftRow')
-const player2Nft1 = document.getElementById('player2NftRow')
-const player2Nft2 = document.getElementById('player2NftRow')
-const player2Nft3 = document.getElementById('player2NftRow')
+const player1Card = document.getElementById('player1Card')
+const player2Card = document.getElementById('player2Card')
+const fightBtn = document.getElementById('fightBtn')
+const resetBtn = document.getElementById('resetBtn')
+const getRandomBtn = document.getElementById('getRandomBtn')
 
-const player1selection = []
-const player2selection = []
-
-
-//const attack = Math.floor(Math.random() * (10 - 4) + 4)
-//const defense = Math.floor(Math.random() * (7 - 3) + 3)
-//const luck = Math.floor(Math.random() * (5 - 1) + 1)
+let player1selection = []
+let player2selection = []
 
 function attack () {
     return Math.floor(Math.random() * (10 - 4) + 4)
@@ -36,17 +29,16 @@ function luck () {
 
 
 const postNfts = (walletId, player) => {
-    
     axios.post(`${baseURL}/nfts`, {walletId})
     .then(res => {
-        firstDropdown.innerHTML = ""
         const {ownedNfts} = res.data
         console.log(ownedNfts)
         const dropdown = document.createElement(`select`)
         ownedNfts.forEach(nft => {
             const nftOption = document.createElement(`option`)
             nftOption.onclick = () => {
-                if(player === 1 && player1selection.length < 3) {                          player1selection.push(nft)
+                if(player === 1 && player1selection.length < 3) {
+                    player1selection.push(nft)
                     console.log(player1selection)
                 } else if (player === 2 && player2selection.length < 3) {
                     player2selection.push(nft)
@@ -54,136 +46,51 @@ const postNfts = (walletId, player) => {
                 } else {
                     alert("You can only select 3!")
                 }
-                //for(let i = 0; i < player1selection.length; i++) {
-                //    const nft1Image[i] = player1selection[i].media[0].thumbnail
-                //    const nft1Title[i] = player1selection[i].title
-                //     player1Nft[i].innerHTML += `
-                //     <div class="card"> 
-                //             <div class="img">
-                //                 <img src="${nft1Image[i]}" />
-                //             </div>
-                //             <div class="details">
-                //             <h4>${nft1Title[i]}</h4>
-                //             <ul>
-                //                 <li>Attack: ${attack()}</li>
-                //                 <li>Defense: ${defense()}</li>
-                //                 <li>Luck: ${luck()}</li>
-                //             </ul>
-                //             </div>
-                //         </div>
-                //     `
-                // }
-                if(player1selection.length === 3) {
-                    const nft1Image1 = player1selection[0].media[0].thumbnail
-                    const nft1Title1 = player1selection[0].title
-
-                    player1Nft1.innerHTML += `
-                        <div class="card">
+                player1Card.innerHTML = ""
+                for(let i = 0; i < player1selection.length; i++) {
+                   const nft1Image = player1selection[i].media[0].thumbnail
+                   const nft1Title = player1selection[i].title
+                   const nftCard = document.createElement('div')
+                   nftCard.className = "card"
+                    nftCard.innerHTML += ` 
                             <div class="img">
-                                <img src="${nft1Image1}" />
+                                <img src="${nft1Image}" alt="Nft image"/>
                             </div>
                             <div class="details">
-                            <h4>${nft1Title1}</h4>
+                            <h4>${nft1Title}</h4>
                             <ul>
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
                             </ul>
                             </div>
-                        </div>
                     `
-                    const nft1Image2 = player1selection[1].media[0].thumbnail
-                    const nft1Title2 = player1selection[1].title
-
-                    player1Nft2.innerHTML += `
-                        <div class="card">
-                            <div class="img">
-                                <img src="${nft1Image2}" />
-                            </div>
-                            <div class="details">
-                            <h4>${nft1Title2}</h4>
-                            <ul>
-                                <li>Attack: ${attack()}</li>
-                                <li>Defense: ${defense()}</li>
-                                <li>Luck: ${luck()}</li>
-                            </ul>
-                            </div>
-                        </div>
-                    `
-                    const nft1Image3 = player1selection[2].media[0].thumbnail
-                    const nft1Title3 = player1selection[2].title
-
-                    player1Nft3.innerHTML += `
-                        <div class="card">
-                            <div class="img">
-                                <img src="${nft1Image3}" />
-                            </div>
-                            <div class="details">
-                            <h4>${nft1Title3}</h4>
-                            <ul>
-                                <li>Attack: ${attack()}</li>
-                                <li>Defense: ${defense()}</li>
-                                <li>Luck: ${luck()}</li>
-                            </ul>
-                            </div>
-                        </div>
-                    `
+                    player1Card.appendChild(nftCard)
                 }
-                if(player2selection.length === 3) {
-                    const nft2Image1 = player2selection[0].media[0].thumbnail
-                    const nft2Title1 = player2selection[0].title
 
-                    player2Nft1.innerHTML += `
-                        <div class="card">
+                player2Card.innerHTML = ""
+                for(let i = 0; i < player2selection.length; i++) {
+                   const nft2Image = player2selection[i].media[0].thumbnail
+                   const nft2Title = player2selection[i].title
+                   const nftCard = document.createElement('div')
+                   nftCard.className = "card"
+                    nftCard.innerHTML += `
                             <div class="img">
-                                <img src="${nft2Image1}" />
+                                <img src="${nft2Image}" alt="Nft image"/>
                             </div>
                             <div class="details">
-                            <h4>${nft2Title1}</h4>
+                            <h4>${nft2Title}</h4>
                             <ul>
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
                             </ul>
                             </div>
-                        </div>
                     `
-                    const nft2Image2 = player2selection[1].media[0].thumbnail
-                    const nft2Title2 = player2selection[1].title
-
-                    player2Nft2.innerHTML += `
-                        <div class="card">
-                            <div class="img">
-                                <img src="${nft2Image2}" />
-                            </div>
-                            <div class="details">
-                            <h4>${nft2Title2}</h4>
-                            <ul>
-                                <li>Attack: ${attack()}</li>
-                                <li>Defense: ${defense()}</li>
-                                <li>Luck: ${luck()}</li>
-                            </ul>
-                            </div>
-                        </div>
-                    `
-                    const nft2Image3 = player2selection[2].media[0].thumbnail
-                    const nft2Title3 = player2selection[2].title
-
-                    player2Nft3.innerHTML += `
-                        <div class="card">
-                            <div class="img">
-                                <img src="${nft2Image3}" />
-                            </div>
-                            <div class="details">
-                            <h4>${nft2Title3}</h4>
-                            <ul>
-                                <li>Attack: ${attack()}</li>
-                                <li>Defense: ${defense()}</li>
-                                <li>Luck: ${luck()}</li>
-                            </ul>
-                            </div>
-                        </div>
-                    `
+                    player2Card.appendChild(nftCard)
+                }
+                if(player1selection.length === 3 && player2selection.length ===3) {
+                    fightBtn.style.display = 'unset'
                 }
             }
             nftOption.textContent = nft.title
@@ -197,8 +104,44 @@ const postNfts = (walletId, player) => {
         }
     })
 }
-    //if double click deselect
-    //need to check if player 
+
+//class body
+
+const sendNfts = () => {
+    let body = {
+        nfts: [...player1selection, ...player2selection]
+    }
+    console.log(body)
+    axios.post(`${baseURL}/nft`, body)
+        .then((res) => {
+            console.log(res.data)
+        }).catch(err => console.log(err))
+}
+
+const getRandomNft = () => {
+    axios.get(`${baseURL}/nfts`)
+        .then((res) => {
+            for(let i=0; i<res.data.length; i++) {
+                
+            }
+        })
+    //make a get request for randomNfts
+    //when it returns loop through res.data 
+    //create and populate data html
+    //append it to the dom
+}
+
+
+const reset = () => {
+    player1Card.innerHTML = ""
+    player2Card.innerHTML = ""
+    player1selection = []
+    player2selection = []
+    wallet1input.value = ""
+    wallet2input.value = ""
+    firstDropdown.innerHTML = ""
+    secondDropdown.innerHTML = ""
+}
     //add button onto card where selection can be removed
 
 
@@ -209,4 +152,16 @@ wallet1Btn.addEventListener("click", () => {
 
 wallet2Btn.addEventListener("click", () => {
     postNfts(wallet2input.value, 2)
+})
+
+fightBtn.addEventListener("click", () => {
+    sendNfts()
+})
+
+getRandomBtn.addEventListener("click", () => {
+    getRandomNft()
+})
+
+resetBtn.addEventListener("click", () => {
+    reset()
 })
