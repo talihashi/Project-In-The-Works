@@ -28,12 +28,10 @@ module.exports = {
     sendNfts: (req, res) => {
         const {nfts} = req.body
         for(let i=0; i < nfts.length; i++) {
-            for(let j=0; j < savedNfts.length; j++) {
-                if(savedNfts.includes(nfts[i]) || nfts[i].media[0].thumbnail === false) {
-                    continue
-                } else {
-                    savedNfts.push(nfts[i])
-                }
+            if(savedNfts.includes(nfts[i]) || nfts[i].media[0].thumbnail === false) {
+                continue
+            } else {
+                savedNfts.push(nfts[i])
             }
         }
         console.log(savedNfts)
@@ -47,9 +45,9 @@ module.exports = {
     },
 
     getRandomNft: (req, res) => {
-        let rando = Math.ceil(Math.random()*savedNfts.length - 1)
-        let rando1 = Math.ceil(Math.random()*savedNfts.length - 1)
-        let rando2 = Math.ceil(Math.random()*savedNfts.length - 1)
+        let rando = Math.ceil(Math.random()*savedNfts.length)
+        let rando1 = Math.ceil(Math.random()*savedNfts.length)
+        let rando2 = Math.ceil(Math.random()*savedNfts.length)
         res.send([...savedNfts[rando], [rando1], [rando2]])
     }
     //add a getRandomNft method
