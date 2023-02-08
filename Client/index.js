@@ -120,10 +120,61 @@ const sendNfts = () => {
 
 const getRandomNft = () => {
     axios.get(`${baseURL}/nfts`)
+        let randomNfts = res.data
         .then((res) => {
-            for(let i=0; i<res.data.length; i++) {
-                
+            for(let i=0; i<randomNfts.length; i++) {
+                if(i<3) {
+                    player1selection.push(randomNfts[i])
+                } else {
+                    player2selection.push(randomNfts[i])
+                }
             }
+            player1Card.innerHTML = ""
+                for(let i = 0; i < player1selection.length; i++) {
+                   const nft1Image = player1selection[i].media[0].thumbnail
+                   const nft1Title = player1selection[i].title
+                   const nftCard = document.createElement('div')
+                   nftCard.className = "card"
+                    nftCard.innerHTML += ` 
+                            <div class="img">
+                                <img src="${nft1Image}" alt="Nft image"/>
+                            </div>
+                            <div class="details">
+                            <h4>${nft1Title}</h4>
+                            <ul>
+                                <li>Attack: ${attack()}</li>
+                                <li>Defense: ${defense()}</li>
+                                <li>Luck: ${luck()}</li>
+                            </ul>
+                            </div>
+                    `
+                    player1Card.appendChild(nftCard)
+                }
+
+                player2Card.innerHTML = ""
+                for(let i = 0; i < player2selection.length; i++) {
+                   const nft2Image = player2selection[i].media[0].thumbnail
+                   const nft2Title = player2selection[i].title
+                   const nftCard = document.createElement('div')
+                   nftCard.className = "card"
+                    nftCard.innerHTML += `
+                            <div class="img">
+                                <img src="${nft2Image}" alt="Nft image"/>
+                            </div>
+                            <div class="details">
+                            <h4>${nft2Title}</h4>
+                            <ul>
+                                <li>Attack: ${attack()}</li>
+                                <li>Defense: ${defense()}</li>
+                                <li>Luck: ${luck()}</li>
+                            </ul>
+                            </div>
+                    `
+                    player2Card.appendChild(nftCard)
+                }
+                if(player1selection.length === 3 && player2selection.length ===3) {
+                    fightBtn.style.display = 'unset'
+                }
         })
     //make a get request for randomNfts
     //when it returns loop through res.data 
@@ -141,6 +192,7 @@ const reset = () => {
     wallet2input.value = ""
     firstDropdown.innerHTML = ""
     secondDropdown.innerHTML = ""
+    fightBtn.style.display = "none"
 }
     //add button onto card where selection can be removed
 

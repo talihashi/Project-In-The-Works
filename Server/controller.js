@@ -48,7 +48,10 @@ module.exports = {
         let rando = Math.ceil(Math.random()*savedNfts.length)
         let rando1 = Math.ceil(Math.random()*savedNfts.length)
         let rando2 = Math.ceil(Math.random()*savedNfts.length)
-        res.send([...savedNfts[rando], [rando1], [rando2]])
+        let rando3 = Math.ceil(Math.random()*savedNfts.length)
+        let rando4 = Math.ceil(Math.random()*savedNfts.length)
+        let rando5 = Math.ceil(Math.random()*savedNfts.length)
+        res.send([...savedNfts[rando], [rando1], [rando2], [rando3], [rando4], [rando5]])
     }
     //add a getRandomNft method
     //grab random nft from savedNfts and send that to the front
