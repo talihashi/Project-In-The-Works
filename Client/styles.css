@@ -31,6 +31,11 @@ main {
     display: inline-flex;
     justify-content: center;
     gap: 8px;
+    width: 100%;
+}
+
+.player {
+    flex: 1;
 }
 
 #wallet1btn img, #wallet2btn img{
