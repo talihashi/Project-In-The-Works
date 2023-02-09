@@ -202,19 +202,19 @@ const fight = () => {
         }
     }
     console.log(player2StatObj[0])
-    for(let i=0; i<player2selection.length; i++){
+    for(let i=0; i<3; i++){
         let title2 = player2selection[i].title
         let title1 = player1selection[i].title
-        if(player1StatObj[i][1] < player2StatObj[i][1]){
-            player2StatObj[i][1] = player1StatObj[i][0] - (player2StatObj[i][1] + player2StatObj[i][2])
+        if(player1StatObj[i].Defense < player2StatObj[i].Defense){
+            player2StatObj[i].Defense = player1StatObj[i].Attack - (player2StatObj[i].Defense + player2StatObj[i].Luck)
         } else {
-            player1StatObj[i][1] = player2StatObj[i][0] - (player1StatObj[i][1] + player1StatObj[i][2])
+            player1StatObj[i].Defense = player2StatObj[i].Attack - (player1StatObj[i].Defense + player1StatObj[i].Luck)
         }
-        if(player2StatObj[i][1] <= 0) {
+        if(player2StatObj[i].Defense <= 0) {
             fightDetails.innerHTML +=`
                 <p>${title2} fought an honorous battle, but they were slain by ${title1}.</p>
             `
-        } else if(player1StatObj[i][1] <= 0) {
+        } else if(player1StatObj[i].Defense <= 0) {
             fightDetails.innerHTML +=`
                 <p>${title1} fought an honorous battle, but they were slain by ${title2}.</p>
             `
@@ -223,6 +223,8 @@ const fight = () => {
                 <p>${title1} and ${title2} are exhausted after a long battle. They both live to fight another day.</p>
             `
         }
+        console.log(player1StatObj[i].Defense)
+        console.log(player2StatObj[i].Defense)
     }
     //one for getting the list items(stats) and sorting through them
     // const lis = document.getElementsByTagName('li')
