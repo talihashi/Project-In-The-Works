@@ -34,26 +34,19 @@ module.exports = {
                 savedNfts.push(nfts[i])
             }
         }
-        console.log(savedNfts)
         res.status(200).send("Nfts added successfully.")
-        //loop through nfts array
-        //check if nft already exists within savedNfts
-        //if it doesn't push nft into the saved nfts
-        //if it is then skip it
-        //check if contains an image, if not do not save
-        //once finished send 200 status with string nfts added successfuly
     },
 
     getRandomNft: (req, res) => {
-        let rando = Math.ceil(Math.random()*savedNfts.length)
-        let rando1 = Math.ceil(Math.random()*savedNfts.length)
-        let rando2 = Math.ceil(Math.random()*savedNfts.length)
-        let rando3 = Math.ceil(Math.random()*savedNfts.length)
-        let rando4 = Math.ceil(Math.random()*savedNfts.length)
-        let rando5 = Math.ceil(Math.random()*savedNfts.length)
-        res.send([...savedNfts[rando], [rando1], [rando2], [rando3], [rando4], [rando5]])
+        const randoHolder = []
+        let rando = Math.floor(Math.random()*savedNfts.length)
+        let rando1 = Math.floor(Math.random()*savedNfts.length)
+        let rando2 = Math.floor(Math.random()*savedNfts.length)
+        let rando3 = Math.floor(Math.random()*savedNfts.length)
+        let rando4 = Math.floor(Math.random()*savedNfts.length)
+        let rando5 = Math.floor(Math.random()*savedNfts.length)
+        randoHolder.push(savedNfts[rando], savedNfts[rando1], savedNfts[rando2], savedNfts[rando3], savedNfts[rando4], savedNfts[rando5])
+        res.status(200).send(randoHolder)
     }
-    //add a getRandomNft method
-    //grab random nft from savedNfts and send that to the front
 
 }

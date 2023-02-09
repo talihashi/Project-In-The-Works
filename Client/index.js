@@ -13,6 +13,7 @@ const player2Card = document.getElementById('player2Card')
 const fightBtn = document.getElementById('fightbtn')
 const resetBtn = document.getElementById('resetbtn')
 const getRandomBtn = document.getElementById('getRandomBtn')
+const fightDetails = document.getElementById('fightDetails')
 
 let player1selection = []
 let player2selection = []
@@ -24,9 +25,8 @@ function defense () {
     return Math.floor(Math.random() * (7 - 3) + 3)
 }
 function luck () {
-    return Math.floor(Math.random() * (5 - 1) + 1)
+    return Math.floor(Math.random() * (3 - 1) + 1)
 }
-
 
 const postNfts = (walletId, player) => {
     axios.post(`${baseURL}/nfts`, {walletId})
@@ -58,14 +58,16 @@ const postNfts = (walletId, player) => {
                             </div>
                             <div class="details">
                             <h4>${nft1Title}</h4>
-                            <ul>
+                            <ul class="player1stats">
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
                             </ul>
                             </div>
                     `
+                    console.log([player1selection[1]])
                     player1Card.appendChild(nftCard)
+                    
                 }
 
                 player2Card.innerHTML = ""
@@ -80,7 +82,7 @@ const postNfts = (walletId, player) => {
                             </div>
                             <div class="details">
                             <h4>${nft2Title}</h4>
-                            <ul>
+                            <ul class="player2stats">
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
@@ -105,8 +107,6 @@ const postNfts = (walletId, player) => {
     })
 }
 
-//class body
-
 const sendNfts = () => {
     let body = {
         nfts: [...player1selection, ...player2selection]
@@ -120,8 +120,8 @@ const sendNfts = () => {
 
 const getRandomNft = () => {
     axios.get(`${baseURL}/nfts`)
-        let randomNfts = res.data
         .then((res) => {
+            let randomNfts = res.data
             for(let i=0; i<randomNfts.length; i++) {
                 if(i<3) {
                     player1selection.push(randomNfts[i])
@@ -141,7 +141,7 @@ const getRandomNft = () => {
                             </div>
                             <div class="details">
                             <h4>${nft1Title}</h4>
-                            <ul>
+                            <ul class="player1stats">
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
@@ -163,7 +163,7 @@ const getRandomNft = () => {
                             </div>
                             <div class="details">
                             <h4>${nft2Title}</h4>
-                            <ul>
+                            <ul class="player2stats">
                                 <li>Attack: ${attack()}</li>
                                 <li>Defense: ${defense()}</li>
                                 <li>Luck: ${luck()}</li>
@@ -176,12 +176,60 @@ const getRandomNft = () => {
                     fightBtn.style.display = 'unset'
                 }
         })
-    //make a get request for randomNfts
-    //when it returns loop through res.data 
-    //create and populate data html
-    //append it to the dom
 }
 
+const fight = () => {
+    let player1stats = document.querySelectorAll('.player1stats')
+    let player2stats = document.querySelectorAll('.player2stats')
+    let player1StatObj = {}
+    let player2StatObj = {}
+    for(let i=0; i<player1stats.length; i++){
+        let statList = player1stats[i].children
+        player1StatObj[i] = {}
+        for(let j = 0; j<statList.length; j++){
+            let statArr = statList[j].textContent.split(": ")
+            player1StatObj[i][statArr[0]] = statArr[1]
+        }
+    }
+    console.log(player1StatObj[2])
+
+    for(let i=0; i<player2stats.length; i++){
+        let statList = player2stats[i].children
+        player2StatObj[i] = {}
+        for(let j = 0; j<statList.length; j++){
+            let statArr = statList[j].textContent.split(": ")
+            player2StatObj[i][statArr[0]] = statArr[1]
+        }
+    }
+    console.log(player2StatObj[0])
+    for(let i=0; i<player2selection.length; i++){
+        let title2 = player2selection[i].title
+        let title1 = player1selection[i].title
+        if(player1StatObj[i][1] < player2StatObj[i][1]){
+            player2StatObj[i][1] = player1StatObj[i][0] - (player2StatObj[i][1] + player2StatObj[i][2])
+        } else {
+            player1StatObj[i][1] = player2StatObj[i][0] - (player1StatObj[i][1] + player1StatObj[i][2])
+        }
+        if(player2StatObj[i][1] <= 0) {
+            fightDetails.innerHTML +=`
+                <p>${title2} fought an honorous battle, but they were slain by ${title1}.</p>
+            `
+        } else if(player1StatObj[i][1] <= 0) {
+            fightDetails.innerHTML +=`
+                <p>${title1} fought an honorous battle, but they were slain by ${title2}.</p>
+            `
+        } else {
+            fightDetails.innerHTML +=`
+                <p>${title1} and ${title2} are exhausted after a long battle. They both live to fight another day.</p>
+            `
+        }
+    }
+    //one for getting the list items(stats) and sorting through them
+    // const lis = document.getElementsByTagName('li')
+    // console.log(lis)
+    //one for sorting through player1selection and player2selection titles
+    //classes to hold all the nft data
+}
 
 const reset = () => {
     player1Card.innerHTML = ""
@@ -193,10 +241,8 @@ const reset = () => {
     firstDropdown.innerHTML = ""
     secondDropdown.innerHTML = ""
     fightBtn.style.display = "none"
+    fightDetails.innerHTML = ""
 }
-    //add button onto card where selection can be removed
-
-
 
 wallet1Btn.addEventListener("click", () => {
     postNfts(wallet1input.value, 1)
@@ -207,7 +253,7 @@ wallet2Btn.addEventListener("click", () => {
 })
 
 fightBtn.addEventListener("click", () => {
-    sendNfts()
+    sendNfts(), fight()
 })
 
 getRandomBtn.addEventListener("click", () => {

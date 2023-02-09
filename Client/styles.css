@@ -1,5 +1,5 @@
 * {
-    font-family: cursive;
+    font-family: Comic Sans MS;
     text-align: center;
 }
 
@@ -116,12 +116,7 @@ ul {
 
 #fightbtn {
     display: none;
-    /* margin-left: -45px; */
 }
-
-/* #resetbtn, #getRandom {
-    margin-left: -45px;
-} */
 
 button {
     margin-top: 15px;
