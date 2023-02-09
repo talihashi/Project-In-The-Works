@@ -226,11 +226,6 @@ const fight = () => {
         console.log(player1StatObj[i].Defense)
         console.log(player2StatObj[i].Defense)
     }
-    //one for getting the list items(stats) and sorting through them
-    // const lis = document.getElementsByTagName('li')
-    // console.log(lis)
-    //one for sorting through player1selection and player2selection titles
-    //classes to hold all the nft data
 }
 
 const reset = () => {
