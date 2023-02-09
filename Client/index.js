@@ -206,9 +206,9 @@ const fight = () => {
         let title2 = player2selection[i].title
         let title1 = player1selection[i].title
         if(player1StatObj[i].Defense < player2StatObj[i].Defense){
-            player2StatObj[i].Defense = player1StatObj[i].Attack - (player2StatObj[i].Defense + player2StatObj[i].Luck)
+            player2StatObj[i].Defense = parseInt(player1StatObj[i].Attack) - (parseInt(player2StatObj[i].Defense) + parseInt(player2StatObj[i].Luck))
         } else {
-            player1StatObj[i].Defense = player2StatObj[i].Attack - (player1StatObj[i].Defense + player1StatObj[i].Luck)
+            player1StatObj[i].Defense = parseInt(player2StatObj[i].Attack) - (parseInt(player1StatObj[i].Defense) + parseInt(player1StatObj[i].Luck))
         }
         if(player2StatObj[i].Defense <= 0) {
             fightDetails.innerHTML +=`
