@@ -32,17 +32,14 @@ const postNfts = (walletId, player) => {
     axios.post(`${baseURL}/nfts`, {walletId})
     .then(res => {
         const {ownedNfts} = res.data
-        console.log(ownedNfts)
         const dropdown = document.createElement(`select`)
         ownedNfts.forEach(nft => {
             const nftOption = document.createElement(`option`)
             nftOption.onclick = () => {
                 if(player === 1 && player1selection.length < 3) {
                     player1selection.push(nft)
-                    console.log(player1selection)
                 } else if (player === 2 && player2selection.length < 3) {
                     player2selection.push(nft)
-                    console.log(player2selection)
                 } else {
                     alert("You can only select 3!")
                 }
@@ -65,7 +62,6 @@ const postNfts = (walletId, player) => {
                             </ul>
                             </div>
                     `
-                    console.log([player1selection[1]])
                     player1Card.appendChild(nftCard)
                     
                 }
@@ -111,7 +107,6 @@ const sendNfts = () => {
     let body = {
         nfts: [...player1selection, ...player2selection]
     }
-    console.log(body)
     axios.post(`${baseURL}/nft`, body)
         .then((res) => {
             console.log(res.data)
@@ -191,7 +186,6 @@ const fight = () => {
             player1StatObj[i][statArr[0]] = statArr[1]
         }
     }
-    console.log(player1StatObj[2])
 
     for(let i=0; i<player2stats.length; i++){
         let statList = player2stats[i].children
@@ -201,7 +195,6 @@ const fight = () => {
             player2StatObj[i][statArr[0]] = statArr[1]
         }
     }
-    console.log(player2StatObj[0])
     for(let i=0; i<3; i++){
         let title2 = player2selection[i].title
         let title1 = player1selection[i].title
@@ -211,20 +204,22 @@ const fight = () => {
             player1StatObj[i].Defense = parseInt(player2StatObj[i].Attack) - (parseInt(player1StatObj[i].Defense) + parseInt(player1StatObj[i].Luck))
         }
         if(player2StatObj[i].Defense <= 0) {
+            delete player2StatObj[i]
             fightDetails.innerHTML +=`
                 <p>${title2} fought an honorous battle, but they were slain by ${title1}.</p>
             `
+            delete player2selection[i]
         } else if(player1StatObj[i].Defense <= 0) {
+            delete player1StatObj[i]
             fightDetails.innerHTML +=`
                 <p>${title1} fought an honorous battle, but they were slain by ${title2}.</p>
             `
+            delete player1selection[i]
         } else {
             fightDetails.innerHTML +=`
                 <p>${title1} and ${title2} are exhausted after a long battle. They both live to fight another day.</p>
             `
         }
-        console.log(player1StatObj[i].Defense)
-        console.log(player2StatObj[i].Defense)
     }
 }
 
